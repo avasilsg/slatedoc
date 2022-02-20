@@ -1,4 +1,4 @@
-# Tracking
+# Asendia Tracking
 
 <aside class="notice">
 The Asendia Tracking API is usable by each Business customers that has prior been registered in Asendia Tracking. The creation of Asendia Tracking account is handled by Asendia Sales team or Customer Service team. Once created, Asendia sends back the credentials for the authentication.
@@ -11,12 +11,20 @@ Password: the one communicated by Asendia Tracking system (this password can be 
 
 The authentication of the application accessing Asendia Tracking web service is done following the next two steps using a User Token.
 </aside>
+## Environment endpoints
 
-## Tracking Authentication
+### Production
+`https://tracking.asendia.com/`
 
-Method | Post
----------- | ------------------------------
-Route | https://<ADFS_URL>/adfs/oauth2/token
+### Test
+
+`https://pptracking.asendia.corp/`
+
+## Authentication
+
+| Method | Post                                 |
+|--------|--------------------------------------|
+| Route  | https://<ADFS_URL>/adfs/oauth2/token |
 
 > Request Body:
 
@@ -37,7 +45,7 @@ Request field:
 ------------| ------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------
  Client_id  | String  | **Test Environment:** <br/> - **client_id:** 01a73879-cf72-4407-b816-4a78828655a9  <br/> **Production Environment**: <br/> - **client_id**: 4aeb7636-8fb5-45d1-a593-2d453ff2f8e0 | true
 
-<aside class="notice">
+<aside class="success">
 Expected response:
 </aside>
 
@@ -61,7 +69,7 @@ The above command returns JSON structured like this:
 ]
 ```
 
-## Tracking Authorization
+## Authorization
 
 Method | Post
 ---------- | ------------------------------
