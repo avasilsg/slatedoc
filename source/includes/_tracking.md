@@ -1,0 +1,93 @@
+# Tracking
+
+<aside class="notice">
+The Asendia Tracking API is usable by each Business customers that has prior been registered in Asendia Tracking. The creation of Asendia Tracking account is handled by Asendia Sales team or Customer Service team. Once created, Asendia sends back the credentials for the authentication.
+
+The credentials are composed by
+
+Username: Email address of the contact (the one communicated to Asendia for the registration)
+
+Password: the one communicated by Asendia Tracking system (this password can be changed by the contact) The security of the webservice is managed by HTTPS protocol.
+
+The authentication of the application accessing Asendia Tracking web service is done following the next two steps using a User Token.
+</aside>
+
+## Tracking Authentication
+
+Method | Post
+---------- | ------------------------------
+Route | https://<ADFS_URL>/adfs/oauth2/token
+
+> Request Body:
+
+```json
+{ 
+"grant_type"="password", 
+"username"="<USERNAME>", 
+"password"="<PASSWORD>", 
+"client_id"="<Asendia_Tracking_API_Id>", 
+"scope"="openid"
+} 
+```
+<aside class="notice">
+Request field:
+</aside>
+
+ Field name | Type    | Description                                                                                                                                                              | Required
+------------| ------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------
+ Client_id  | String  | **Test Environment:** <br/> - **client_id:** 01a73879-cf72-4407-b816-4a78828655a9  <br/> **Production Environment**: <br/> - **client_id**: 4aeb7636-8fb5-45d1-a593-2d453ff2f8e0 | true
+
+<aside class="notice">
+Expected response:
+</aside>
+
+The above command returns JSON structured like this:
+
+> Response:
+
+
+```json
+[
+  {
+    "access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUz[...]lxJa6Fes-LgYeegPVy4TFw",
+    "token_type":"bearer",
+    "expires_in":3600,
+    "resource":"01a73879-cf72-4407-b816-4a78828655a9",
+    "refresh_token":"Uj1TTM0-epDifqXXXO0pUxhPpIXRWa[...]12W4ShuZrwNQ",
+    "refresh_token_expires_in":28799,
+    "scope":"openid",
+    "id_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiI[...]C5IvUY0IbqFSGehu2Cw"
+  }
+]
+```
+
+## Tracking Authorization
+
+Method | Post
+---------- | ------------------------------
+Route | https://{urlAlliot}/alliot/gettoken 
+
+
+### HTTP Request
+
+`GET http://example.com/api/kittens`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+include_cats | false | If set to true, the result will also include cats.
+available | true | If set to false, the result will include kittens that have already been adopted.
+
+
+> Request Body:
+
+```json
+{ 
+"grant_type"="password", 
+"username"="<USERNAME>", 
+"password"="<PASSWORD>", 
+"client_id"="<Asendia_Tracking_API_Id>", 
+"scope"="openid"
+} 
+```
