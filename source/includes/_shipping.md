@@ -19,7 +19,7 @@ This endpoint deletes a specific kitten.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+ID | The ID of the shipment to delete
 
 ### Shipping Operations
 
@@ -229,3 +229,153 @@ Response returns a parcel label coded in Base64 format, in PDF, ZPL, PNG or TIFF
 </soapenv:Envelope>
 ```
 
+## Add master shipment
+
+This operation is used to transmit the list of shipments that customer will deliver to Asendia facility. In the request, all shipments are included into a Master Shipment  Response returns the PDF Customer manifest (coded in Base64) to be printed and delivered to Asendia with physical shipments. Note: Master Shipment is the virtual object that contains all the shipments and customer manifest is the related PDF document
+About frequency: it is technically possible to create one Customer manifest per week, per day and even several ones for the same day. So just check with you Account Manager what is the most suitable. 
+
+> add master shipment template
+
+```xml
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://centiro.com/facade/shared/1/0/datacontract" xmlns:ser="http://centiro.com/facade/tmsBasic/1/0/servicecontract" xmlns:cen="http://schemas.datacontract.org/2004/07/Centiro.Facade.TMSBasic.Contract.c1.i1.TMSBasic.BaseTypes.DTO" xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header>
+    <dat:MessageId>?</dat:MessageId>
+    <dat:AuthenticationTicket>?</dat:AuthenticationTicket>
+  </soapenv:Header>
+  <soapenv:Body>
+    <ser:AddMasterShipmentRequest>
+      <!--Optional:-->
+      <ser:LabelType>?</ser:LabelType>
+      <!--Optional:-->
+      <ser:MasterShipment>
+        <!--Optional:-->
+        <cen:Addresses>
+          <!--Zero or more repetitions:-->
+          <cen:Address>
+            <!--Optional:-->
+            <cen:Address1>?</cen:Address1>
+            <!--Optional:-->
+            <cen:Address2>?</cen:Address2>
+            <!--Optional:-->
+            <cen:Address3>?</cen:Address3>
+            <!--Optional:-->
+            <cen:AddressType>?</cen:AddressType>
+            <!--Optional:-->
+            <cen:CellPhone>?</cen:CellPhone>
+            <!--Optional:-->
+            <cen:City>?</cen:City>
+            <!--Optional:-->
+            <cen:Contact>?</cen:Contact>
+            <!--Optional:-->
+            <cen:CustomerNumber>?</cen:CustomerNumber>
+            <!--Optional:-->
+            <cen:Email>?</cen:Email>
+            <!--Optional:-->
+            <cen:Fax>?</cen:Fax>
+            <!--Optional:-->
+            <cen:Freetext1>?</cen:Freetext1>
+            <!--Optional:-->
+            <cen:Freetext2>?</cen:Freetext2>
+            <!--Optional:-->
+            <cen:Freetext3>?</cen:Freetext3>
+            <!--Optional:-->
+            <cen:Freetext4>?</cen:Freetext4>
+            <!--Optional:-->
+            <cen:ISOCountry>?</cen:ISOCountry>
+            <!--Optional:-->
+            <cen:Name>?</cen:Name>
+            <!--Optional:-->
+            <cen:Phone>?</cen:Phone>
+            <!--Optional:-->
+            <cen:State>?</cen:State>
+            <!--Optional:-->
+            <cen:VatNo>?</cen:VatNo>
+            <!--Optional:-->
+            <cen:ZipCode>?</cen:ZipCode>
+          </cen:Address>
+        </cen:Addresses>
+        <!--Optional:-->
+        <cen:Attributes>
+          <!--Zero or more repetitions:-->
+          <cen:Attribute>
+            <!--Optional:-->
+            <cen:Code>?</cen:Code>
+            <!--Optional:-->
+            <cen:Value>?</cen:Value>
+          </cen:Attribute>
+        </cen:Attributes>
+        <!--Optional:-->
+        <cen:ChildShipmentIdentifiers>
+          <!--Zero or more repetitions:-->
+          <arr:string>?</arr:string>
+        </cen:ChildShipmentIdentifiers>
+        <!--Optional:-->
+        <cen:DeliveryInstruction>?</cen:DeliveryInstruction>
+        <!--Optional:-->
+        <cen:LoadingMeasure>?</cen:LoadingMeasure>
+        <!--Optional:-->
+        <cen:ModeOfTransport>?</cen:ModeOfTransport>
+        <!--Optional:-->
+        <cen:OrderNumber>?</cen:OrderNumber>
+        <!--Optional:-->
+        <cen:SenderCode>?</cen:SenderCode>
+        <!--Optional:-->
+        <cen:SequenceNumber>?</cen:SequenceNumber>
+        <!--Optional:-->
+        <cen:ShipDate>?</cen:ShipDate>
+        <!--Optional:-->
+        <cen:ShipmentIdentifier>?</cen:ShipmentIdentifier>
+        <!--Optional:-->
+        <cen:Value>?</cen:Value>
+        <!--Optional:-->
+        <cen:Volume>?</cen:Volume>
+        <!--Optional:-->
+        <cen:Weight>?</cen:Weight>
+      </ser:MasterShipment>
+    </ser:AddMasterShipmentRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+```
+
+## Cancel shipment
+
+This operation is used to cancel a shipment before it is manifested to Asendia ie before creation of the customer manifest. 
+
+```xml
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://centiro.com/facade/shared/1/0/datacontract" xmlns:ser="http://centiro.com/facade/tmsBasic/1/0/servicecontract">
+  <soapenv:Header>
+    <dat:MessageId>?</dat:MessageId>
+    <dat:AuthenticationTicket>?</dat:AuthenticationTicket>
+  </soapenv:Header>
+  <soapenv:Body>
+    <ser:CancelShipmentRequest>
+      <!--Optional:-->
+      <ser:ShipmentIdentifier>?</ser:ShipmentIdentifier>
+      <!--Optional:-->
+      <ser:ShipmentType>?</ser:ShipmentType>
+    </ser:CancelShipmentRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+```
+
+## Close shipment
+
+The operation is used when customer wants to manifest the shipments directly to carrier itself (instead of to Asendia Hub). In other words, this operation is an alternative to add master shipment.
+
+```xml
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://centiro.com/facade/shared/1/0/datacontract" xmlns:ser="http://centiro.com/facade/tmsBasic/1/0/servicecontract" xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header>
+    <dat:MessageId>?</dat:MessageId>
+    <dat:AuthenticationTicket>?</dat:AuthenticationTicket>
+  </soapenv:Header>
+  <soapenv:Body>
+    <ser:CloseShipmentsRequest>
+      <!--Optional:-->
+      <ser:ShipmentIdentifiers>
+        <!--Zero or more repetitions:-->
+        <arr:string>?</arr:string>
+      </ser:ShipmentIdentifiers>
+    </ser:CloseShipmentsRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+```
